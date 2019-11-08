@@ -30,7 +30,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void remove(Long id) {
+    public Optional<Board> remove(Long id) {
 
+        return null;
     }
 }

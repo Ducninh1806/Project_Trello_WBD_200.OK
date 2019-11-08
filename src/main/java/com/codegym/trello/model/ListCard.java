@@ -9,7 +9,7 @@ public class ListCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long listId;
+    private Long listId;
     private String listName;
 
     @OneToMany(targetEntity = Card.class)
