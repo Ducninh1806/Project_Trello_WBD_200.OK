@@ -1,4 +1,4 @@
-package com.codegym.trello.model;
+package com.source.trello.model;
 
 import javax.persistence.*;
 import java.util.List;

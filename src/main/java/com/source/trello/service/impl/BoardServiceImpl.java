@@ -1,8 +1,8 @@
-package com.codegym.trello.service.impl;
+package com.source.trello.service.impl;
 
-import com.codegym.trello.model.Board;
-import com.codegym.trello.repository.BoardRepository;
-import com.codegym.trello.service.BoardService;
+import com.source.trello.model.Board;
+import com.source.trello.repository.BoardRepository;
+import com.source.trello.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

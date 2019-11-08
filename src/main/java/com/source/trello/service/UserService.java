@@ -1,6 +1,6 @@
-package com.codegym.trello.service;
+package com.source.trello.service;
 
-import com.codegym.trello.model.User;
+import com.source.trello.model.User;
 
 import java.util.Optional;
 

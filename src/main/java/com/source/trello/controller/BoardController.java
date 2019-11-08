@@ -1,7 +1,7 @@
-package com.codegym.trello.controller;
+package com.source.trello.controller;
 
-import com.codegym.trello.model.Board;
-import com.codegym.trello.service.BoardService;
+import com.source.trello.model.Board;
+import com.source.trello.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.codegym.trello;
+package com.source.trello;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

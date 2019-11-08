@@ -1,6 +1,6 @@
-package com.codegym.trello.repository;
+package com.source.trello.repository;
 
-import com.codegym.trello.model.User;
+import com.source.trello.model.User;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
