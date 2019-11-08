@@ -1,10 +1,11 @@
 package com.codegym.trello.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "list")
-public class List {
+public class ListCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,16 +13,16 @@ public class List {
     private String listName;
 
     @OneToMany(targetEntity = Card.class)
-    private java.util.List<Card> cards;
+    private List<Card> cards;
 
     @ManyToOne
     @JoinColumn(name = "boardId")
     private Board board;
 
-    public List() {
+    public ListCard() {
     }
 
-    public List(String listName) {
+    public ListCard(String listName) {
         this.listName = listName;
     }
 
