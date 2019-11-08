@@ -12,19 +12,11 @@ public class ListCard {
     private Long listId;
     private String listName;
 
-    @OneToMany(targetEntity = Card.class)
-    private List<Card> cards;
-
-    @ManyToOne
-    @JoinColumn(name = "boardId")
-    private Board board;
-
     public ListCard() {
     }
 
-    public ListCard(String listName, Board board) {
+    public ListCard(String listName) {
         this.listName = listName;
-        this.board = board;
     }
 
     public Long getListId() {
@@ -43,19 +35,4 @@ public class ListCard {
         this.listName = listName;
     }
 
-    public java.util.List<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(java.util.List<Card> cards) {
-        this.cards = cards;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-    }
 }

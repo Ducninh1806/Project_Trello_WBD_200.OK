@@ -12,9 +12,7 @@ public class Card {
     private String title;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "listId")
-    private ListCard list;
+
 
     public Card() {
     }
@@ -48,11 +46,4 @@ public class Card {
         this.description = description;
     }
 
-    public ListCard getList() {
-        return list;
-    }
-
-    public void setList(ListCard list) {
-        this.list = list;
-    }
 }
