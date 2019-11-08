@@ -25,13 +25,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Board save(Board board) {
-        return null;
+    public void save(Board board) {
+        boardRepository.save(board);
     }
 
     @Override
-    public Optional<Board> remove(Long id) {
-
-        return null;
+    public void remove(Long id) {
+        boardRepository.deleteById(id);
     }
 }

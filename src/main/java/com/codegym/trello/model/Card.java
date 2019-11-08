@@ -25,11 +25,11 @@ public class Card {
         this.description = description;
     }
 
-    public long getCardId() {
+    public Long getCardId() {
         return cardId;
     }
 
-    public void setCardId(long cardId) {
+    public void setCardId(Long cardId) {
         this.cardId = cardId;
     }
 

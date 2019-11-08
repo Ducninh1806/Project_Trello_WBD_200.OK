@@ -37,8 +37,9 @@ public class BoardController {
 
     @PostMapping
     public ResponseEntity<Board> createBoard(@RequestBody Board board){
-       Board currentBoard= boardService.save(board);
-        return new ResponseEntity<>(currentBoard, HttpStatus.CREATED);
+       Board board1 = board;
+       boardService.save(board);
+        return new ResponseEntity<>(board1, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

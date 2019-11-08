@@ -22,15 +22,16 @@ public class ListCard {
     public ListCard() {
     }
 
-    public ListCard(String listName) {
+    public ListCard(String listName, Board board) {
         this.listName = listName;
+        this.board = board;
     }
 
-    public long getListId() {
+    public Long getListId() {
         return listId;
     }
 
-    public void setListId(long listId) {
+    public void setListId(Long listId) {
         this.listId = listId;
     }
 

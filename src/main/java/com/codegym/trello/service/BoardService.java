@@ -10,9 +10,9 @@ public interface BoardService {
 
     Optional<Board> findById(Long id);
 
-    Board save (Board board);
+    void save (Board board);
 
-    Optional<Board> remove (Long id);
+    void remove (Long id);
 
 
 
