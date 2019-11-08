@@ -1,7 +1,6 @@
 package com.codegym.trello.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "board")
@@ -9,14 +8,11 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long boardId;
+    private Long boardId;
 
     private String boardName;
     private String time;
 
-//
-//    @OneToMany(targetEntity = List.class)
-//    private List<List> lists;
 
     public Board() {
     }
@@ -50,11 +46,5 @@ public class Board {
         this.time = time;
     }
 
-//    public List<List> getLists() {
-//        return lists;
-//    }
-//
-//    public void setLists(List<List> lists) {
-//        this.lists = lists;
-//    }
+
 }

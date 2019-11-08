@@ -9,7 +9,7 @@ public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long cardId;
+    private Long cardId;
     private String title;
     private String description;
 

@@ -12,7 +12,7 @@ public interface BoardService {
 
     Board save (Board board);
 
-    void remove (Long id);
+    Optional<Board> remove (Long id);
 
 
 
