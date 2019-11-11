@@ -1,5 +1,7 @@
 package com.source.trello.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,9 @@ public class Card {
     private String description;
 
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ListCardId")
+    private ListCard listSet;
 
     public Card() {
     }
@@ -20,6 +25,12 @@ public class Card {
     public Card(String title, String description) {
         this.title = title;
         this.description = description;
+    }
+
+    public Card(String title, String description, ListCard listSet) {
+        this.title = title;
+        this.description = description;
+        this.listSet = listSet;
     }
 
     public Long getCardId() {
@@ -46,4 +57,11 @@ public class Card {
         this.description = description;
     }
 
+    public ListCard getListSet() {
+        return listSet;
+    }
+
+    public void setListSet(ListCard listSet) {
+        this.listSet = listSet;
+    }
 }
