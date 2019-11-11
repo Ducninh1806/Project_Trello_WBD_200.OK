@@ -1,6 +1,9 @@
 package com.source.trello.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,6 +24,10 @@ public class Board {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> userSet;
 
+    @JsonIgnore
+    @OneToMany(targetEntity = ListCard.class,fetch = FetchType.EAGER, mappedBy = "boardSet", cascade = CascadeType.ALL)
+    private Set<ListCard> listSet;
+
     public Board() {
     }
 
@@ -33,6 +40,13 @@ public class Board {
         this.boardName = boardName;
         this.time = time;
         this.userSet = userSet;
+    }
+
+    public Board(String boardName, String time, Set<User> userSet, Set<ListCard> listSet) {
+        this.boardName = boardName;
+        this.time = time;
+        this.userSet = userSet;
+        this.listSet = listSet;
     }
 
     public Long getBoardId() {
@@ -65,5 +79,13 @@ public class Board {
 
     public void setUserSet(Set<User> userSet) {
         this.userSet = userSet;
+    }
+
+    public Set<ListCard> getListSet() {
+        return listSet;
+    }
+
+    public void setListSet(Set<ListCard> listSet) {
+        this.listSet = listSet;
     }
 }
