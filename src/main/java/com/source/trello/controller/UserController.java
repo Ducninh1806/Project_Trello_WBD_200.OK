@@ -1,75 +1,88 @@
 package com.source.trello.controller;
 
+import com.source.trello.message.request.LoginForm;
+import com.source.trello.message.request.SignUpForm;
+import com.source.trello.message.response.JwtResponse;
+import com.source.trello.message.response.ResponseMessage;
 import com.source.trello.model.Board;
+import com.source.trello.model.Role;
+import com.source.trello.model.RoleName;
 import com.source.trello.model.User;
+import com.source.trello.repository.RoleRepository;
+import com.source.trello.repository.UserRepository;
+import com.source.trello.security.jwt.JwtProvider;
 import com.source.trello.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    AuthenticationManager authenticationManager;
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUser() {
-        List<User> userList = (List<User>) userService.findAll();
-        if (userList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    JwtProvider jwtProvider;
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtProvider.generateJwtToken(authentication);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return ResponseEntity.ok(new JwtResponse(jwt,userDetails.getUsername(),userDetails.getAuthorities()));
+    }
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
+        if (userRepository.existsByUserName(signUpRequest.getUserName())) {
+            return new ResponseEntity<>(new ResponseMessage("Username is already taken!Try again!"), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(userList, HttpStatus.OK);
-    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable("id") Long id) {
-        Optional<User> user = userService.findById(id);
-        if (user.isPresent()) {
-            return new ResponseEntity<>(user.get(), HttpStatus.OK);
-
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return new ResponseEntity<>(new ResponseMessage("Email is already in use!Try again"),
+                    HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        User user = new User(signUpRequest.getPhoneNumber(),signUpRequest.getUserName(),signUpRequest.getEmail(),
+                passwordEncoder.encode(signUpRequest.getPassword()));
+        Set<Role> strRoles = signUpRequest.getRole();
+        Set<Role> roles = new HashSet<>();
+        strRoles.forEach(role -> {
+            Role userRole = roleRepository.findByName(RoleName.USER)
+                    .orElseThrow(() -> new RuntimeException("Fail! User Role not find!"));
+            roles.add(userRole);
+        });
+
+
+        user.setRoles(roles);
+        userRepository.save(user);
+        return new ResponseEntity<>(new ResponseMessage("User registered successfully!"),HttpStatus.OK);
 
     }
-
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User newUser = userService.save(user);
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        Optional<User> user1 = userService.findById(id);
-        if (!user1.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        user1.get().setUserId(user.getUserId());
-        user1.get().setEmail(user.getEmail());
-        user1.get().setPassword(user.getPassword());
-        user1.get().setPhoneNumber(user.getPhoneNumber());
-        user1.get().setBoardSet(user.getBoardSet());
-        user1.get().setUserName(user.getUserName());
-
-        userService.save(user1.get());
-        return new ResponseEntity<>(user1.get(), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable Long id) {
-        Optional<User> user = userService.findById(id);
-        if (user.isPresent()) {
-            userService.remove(id);
-            return new ResponseEntity<>(user.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
 }
