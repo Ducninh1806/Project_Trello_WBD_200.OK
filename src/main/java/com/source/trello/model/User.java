@@ -1,22 +1,51 @@
 package com.source.trello.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user",uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "username"
+        }),
+        @UniqueConstraint(columnNames = "email")
+})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
+    @NotBlank
+    @Size(min = 2,max = 50)
     private String userName;
+
+    @NaturalId
+    @NotBlank
+    @Size(max = 60)
     private String email;
+
+    @NotBlank
+    @Size(min = 3,max = 50)
     private String phoneNumber;
+
+    @NotBlank
+    @Size(min = 3)
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
 
     @JsonIgnore
     @ManyToMany(mappedBy = "userSet", fetch = FetchType.EAGER)
@@ -25,12 +54,6 @@ public class User {
     public User() {
     }
 
-    public User(String userName, String email, String phoneNumber, String password) {
-        this.userName = userName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-    }
 
     public User(String userName, String email, String phoneNumber, String password, Set<Board> boardSet) {
         this.userName = userName;
@@ -38,6 +61,21 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.boardSet = boardSet;
+    }
+
+    public User(@NotBlank @Size(min = 2, max = 50) String userName, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3, max = 50) String phoneNumber, @NotBlank @Size(min = 3) String password) {
+        this.userName = userName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Long getUserId() {
@@ -87,4 +125,6 @@ public class User {
     public void setBoardSet(Set<Board> boardSet) {
         this.boardSet = boardSet;
     }
+
+
 }
