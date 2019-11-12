@@ -6,6 +6,7 @@ import com.source.trello.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,5 +33,10 @@ public class CardServiceImpl implements CardService {
     @Override
     public void remove(Long id) {
         cardRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Card> findAllByListSet_ListId(Long listId) {
+        return cardRepository.findAllByListSet_ListId(listId);
     }
 }

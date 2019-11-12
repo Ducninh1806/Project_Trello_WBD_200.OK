@@ -2,6 +2,7 @@ package com.source.trello.service;
 
 import com.source.trello.model.ListCard;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ListService {
@@ -14,6 +15,6 @@ public interface ListService {
 
     void remove (Long id);
 
-
+    List<ListCard> findAllByBoardSet_BoardId(Long boardId);
 
 }

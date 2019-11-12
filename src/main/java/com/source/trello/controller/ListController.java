@@ -66,5 +66,14 @@ public class ListController {
     }
 
 
+    //-----------------------find all by board----------------------
+    @GetMapping("/board/{id}")
+    public ResponseEntity<List<ListCard>>getAllListByBoard(@PathVariable Long id){
+        List<ListCard> listCards = listService.findAllByBoardSet_BoardId(id);
+        if (listCards.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(listCards, HttpStatus.OK);
+    }
 
 }

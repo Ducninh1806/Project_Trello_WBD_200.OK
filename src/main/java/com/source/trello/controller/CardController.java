@@ -46,8 +46,12 @@ public class CardController {
     public ResponseEntity<Card> updateCard(@PathVariable Long id, @RequestBody Card card){
         Optional<Card> currentCard = cardService.findById(id);
         if (currentCard.isPresent()){
+
+            currentCard.get().setCardId(card.getCardId());
             currentCard.get().setTitle(card.getTitle());
             currentCard.get().setDescription(card.getDescription());
+            currentCard.get().setListSet(card.getListSet());
+
             cardService.save(currentCard.get());
             return new ResponseEntity<>(currentCard.get(), HttpStatus.OK);
         }
@@ -63,6 +67,16 @@ public class CardController {
             return new ResponseEntity<>(card.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    //-----------------------find all by list----------------------
+    @GetMapping("/list/{id}")
+    public ResponseEntity<List<Card>> findAllCardByList(@PathVariable Long id){
+        List<Card> cards = cardService.findAllByListSet_ListId(id);
+        if (cards.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
 }

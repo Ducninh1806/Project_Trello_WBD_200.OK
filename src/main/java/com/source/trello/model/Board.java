@@ -3,7 +3,7 @@ package com.source.trello.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -15,7 +15,7 @@ public class Board {
     private Long boardId;
 
     private String boardName;
-    private String time;
+    private Date time;
 
     @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinTable(
@@ -31,18 +31,18 @@ public class Board {
     public Board() {
     }
 
-    public Board(String boardName, String time) {
+    public Board(String boardName, Date time) {
         this.boardName = boardName;
         this.time = time;
     }
 
-    public Board(String boardName, String time, Set<User> userSet) {
+    public Board(String boardName, Date time, Set<User> userSet) {
         this.boardName = boardName;
         this.time = time;
         this.userSet = userSet;
     }
 
-    public Board(String boardName, String time, Set<User> userSet, Set<ListCard> listSet) {
+    public Board(String boardName, Date time, Set<User> userSet, Set<ListCard> listSet) {
         this.boardName = boardName;
         this.time = time;
         this.userSet = userSet;
@@ -65,11 +65,11 @@ public class Board {
         this.boardName = boardName;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

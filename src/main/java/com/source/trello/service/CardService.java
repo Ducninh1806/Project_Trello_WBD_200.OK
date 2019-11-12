@@ -2,6 +2,7 @@ package com.source.trello.service;
 
 import com.source.trello.model.Card;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CardService {
@@ -13,6 +14,8 @@ public interface CardService {
     void save (Card card);
 
     void remove(Long id);
+
+    List<Card> findAllByListSet_ListId(Long listId);
 
 
 }
