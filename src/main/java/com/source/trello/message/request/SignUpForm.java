@@ -10,11 +10,7 @@ import java.util.Set;
 public class SignUpForm {
 
     @NotBlank
-    @Size(min = 3,max = 50)
-    private String phoneNumber;
-
-    @NotBlank
-    @Size(min = 2,max = 50)
+    @Size(min = 2, max = 50)
     private String username;
 
     @NotBlank
@@ -31,20 +27,11 @@ public class SignUpForm {
     public SignUpForm() {
     }
 
-    public SignUpForm(@NotBlank @Size(min = 3, max = 50) String phoneNumber,@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) @Email String email, Set<Role> role, @NotBlank @Size(min = 3, max = 50) String password) {
-        this.phoneNumber = phoneNumber;
+    public SignUpForm(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) @Email String email, Set<Role> role, @NotBlank @Size(min = 3) String password) {
         this.username = username;
         this.email = email;
         this.role = role;
         this.password = password;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getUsername() {

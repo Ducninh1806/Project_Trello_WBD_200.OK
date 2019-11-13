@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class UserPrinciple implements UserDetails {
     private static long serialVersionUID = 1L;
     private Long userId;
-    private String phoneNumber;
     private String username;
     private String email;
 
@@ -23,9 +22,8 @@ public class UserPrinciple implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrinciple(Long userId, String phoneNumber, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrinciple(Long userId, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.userId = userId;
-        this.phoneNumber = phoneNumber;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -37,9 +35,8 @@ public class UserPrinciple implements UserDetails {
                 new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
         return new UserPrinciple(
                 user.getUserId(),
-                user.getEmail(),
-                user.getPhoneNumber(),
                 user.getUsername(),
+                user.getEmail(),
                 user.getPassword(),
                 authorities
         );
@@ -64,15 +61,6 @@ public class UserPrinciple implements UserDetails {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
 
     public String getEmail() {
         return email;
@@ -130,6 +118,6 @@ public class UserPrinciple implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserPrinciple user = (UserPrinciple) o;
-        return Objects.equals(userId,user.userId);
+        return Objects.equals(userId, user.userId);
     }
 }

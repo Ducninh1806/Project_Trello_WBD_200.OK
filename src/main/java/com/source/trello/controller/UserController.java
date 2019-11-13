@@ -82,7 +82,6 @@ public class UserController {
         user1.get().setUserId(user.getUserId());
         user1.get().setEmail(user.getEmail());
         user1.get().setPassword(user.getPassword());
-        user1.get().setPhoneNumber(user.getPhoneNumber());
         user1.get().setBoardSet(user.getBoardSet());
         user1.get().setUsername(user.getUsername());
 
@@ -127,7 +126,6 @@ public class UserController {
         User user1 = new User();
 
         user1.setUsername(signUpRequest.getUsername());
-        user1.setPhoneNumber(signUpRequest.getPhoneNumber());
         user1.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         user1.setEmail(signUpRequest.getEmail());
 
@@ -142,7 +140,7 @@ public class UserController {
 
         user1.setRoles(roles);
         userService.save(user1);
-        return new ResponseEntity<>(new ResponseMessage("User registered successfully!"),HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
 
     }
 }

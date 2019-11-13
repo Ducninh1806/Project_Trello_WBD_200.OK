@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -33,10 +32,6 @@ public class User {
     private String email;
 
     @NotBlank
-    @Size(min = 3,max = 50)
-    private String phoneNumber;
-
-    @NotBlank
     @Size(min = 3)
     private String password;
 
@@ -55,18 +50,17 @@ public class User {
     }
 
 
-    public User(String userName, String email, String phoneNumber, String password, Set<Board> boardSet) {
-        this.username= userName;
+    public User(String username, String email, String password, Set<Board> boardSet) {
+        this.username= username;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+
         this.password = password;
         this.boardSet = boardSet;
     }
 
-    public User(@NotBlank @Size(min = 2, max = 50) String userName, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3, max = 50) String phoneNumber, @NotBlank @Size(min = 3) String password) {
+    public User(@NotBlank @Size(min = 2, max = 50) String userName, @NotBlank @Size(max = 60) String email,  @NotBlank @Size(min = 3) String password) {
         this.username= userName;
         this.email = email;
-        this.phoneNumber = phoneNumber;
         this.password = password;
     }
 
@@ -100,14 +94,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getPassword() {
