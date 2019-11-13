@@ -8,9 +8,9 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
-    Optional<User> findByUserName(String username);
+    Optional<User> findByUsername(String username);
 
     Boolean existsByEmail(String email);
 
-    Boolean existsByUserName(String username);
+    Boolean existsByUsername(String username);
 }

@@ -84,7 +84,7 @@ public class UserController {
         user1.get().setPassword(user.getPassword());
         user1.get().setPhoneNumber(user.getPhoneNumber());
         user1.get().setBoardSet(user.getBoardSet());
-        user1.get().setUserName(user.getUserName());
+        user1.get().setUsername(user.getUsername());
 
         userService.save(user1.get());
         return new ResponseEntity<>(user1.get(), HttpStatus.OK);
@@ -103,7 +103,7 @@ public class UserController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -115,7 +115,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
-        if (userService.existsByUserName(signUpRequest.getUserName())) {
+        if (userService.existsByUserName(signUpRequest.getUsername())) {
             return new ResponseEntity<>(new ResponseMessage("Username is already taken!Try again!"), HttpStatus.BAD_REQUEST);
         }
 
@@ -126,7 +126,7 @@ public class UserController {
 
         User user1 = new User();
 
-        user1.setUserName(signUpRequest.getUserName());
+        user1.setUsername(signUpRequest.getUsername());
         user1.setPhoneNumber(signUpRequest.getPhoneNumber());
         user1.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         user1.setEmail(signUpRequest.getEmail());

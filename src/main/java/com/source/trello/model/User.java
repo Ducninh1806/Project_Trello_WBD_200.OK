@@ -25,7 +25,7 @@ public class User {
 
     @NotBlank
     @Size(min = 2,max = 50)
-    private String userName;
+    private String username;
 
     @NaturalId
     @NotBlank
@@ -56,7 +56,7 @@ public class User {
 
 
     public User(String userName, String email, String phoneNumber, String password, Set<Board> boardSet) {
-        this.userName = userName;
+        this.username= userName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -64,7 +64,7 @@ public class User {
     }
 
     public User(@NotBlank @Size(min = 2, max = 50) String userName, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3, max = 50) String phoneNumber, @NotBlank @Size(min = 3) String password) {
-        this.userName = userName;
+        this.username= userName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -86,12 +86,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

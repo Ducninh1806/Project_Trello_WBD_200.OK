@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 public class LoginForm {
     @NotBlank
     @Size(min = 3,max = 50)
-    private String userName;
+    private String username;
 
     @NotBlank
     @Size(min = 4,max = 100)
@@ -15,17 +15,17 @@ public class LoginForm {
     public LoginForm() {
     }
 
-    public LoginForm(@NotBlank @Size(min = 3, max = 50) String userName, @NotBlank @Size(min = 4, max = 100) String password) {
-        this.userName = userName;
+    public LoginForm(@NotBlank @Size(min = 3, max = 50) String username, @NotBlank @Size(min = 4, max = 100) String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
