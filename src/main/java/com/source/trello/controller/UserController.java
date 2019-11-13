@@ -129,7 +129,7 @@ public class UserController {
         user1.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         user1.setEmail(signUpRequest.getEmail());
 
-        Set<Role> strRoles = signUpRequest.getRole();
+        Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
         strRoles.forEach(role -> {
             Role userRole = roleService.findByName(RoleName.USER)
