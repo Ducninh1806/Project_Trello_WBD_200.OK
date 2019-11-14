@@ -20,7 +20,7 @@ public class ListCard {
     private Board boardSet;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Card.class,fetch = FetchType.EAGER, mappedBy = "listSet", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Card.class,fetch = FetchType.EAGER, mappedBy = "listSet")
     private Set<Card> cardSet;
 
     public ListCard() {

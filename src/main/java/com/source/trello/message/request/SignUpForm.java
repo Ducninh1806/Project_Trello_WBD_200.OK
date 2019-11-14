@@ -1,7 +1,4 @@
 package com.source.trello.message.request;
-
-import com.source.trello.model.Role;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
