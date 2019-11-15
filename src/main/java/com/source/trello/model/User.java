@@ -64,6 +64,14 @@ public class User {
         this.password = password;
     }
 
+    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.boardSet = boardSet;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }

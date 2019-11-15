@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class ListServiceImpl implements ListService {
 
     @Autowired
     private ListRepository listRepository;
-
 
     @Override
     public Iterable<ListCard> findALl() {

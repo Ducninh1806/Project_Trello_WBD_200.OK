@@ -1,7 +1,4 @@
 package com.source.trello.message.request;
-
-import com.source.trello.model.Role;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -18,7 +15,7 @@ public class SignUpForm {
     @Email
     private String email;
 
-    private Set<Role> role;
+    private Set<String> role;
 
     @NotBlank
     @Size(min = 3)
@@ -27,7 +24,7 @@ public class SignUpForm {
     public SignUpForm() {
     }
 
-    public SignUpForm(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) @Email String email, Set<Role> role, @NotBlank @Size(min = 3) String password) {
+    public SignUpForm(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) @Email String email, Set<String> role, @NotBlank @Size(min = 3) String password) {
         this.username = username;
         this.email = email;
         this.role = role;
@@ -50,11 +47,11 @@ public class SignUpForm {
         this.email = email;
     }
 
-    public Set<Role> getRole() {
+    public Set<String> getRole() {
         return role;
     }
 
-    public void setRole(Set<Role> role) {
+    public void setRole(Set<String> role) {
         this.role = role;
     }
 

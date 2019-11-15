@@ -56,11 +56,11 @@ public class ListController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ListCard> deleteList(@PathVariable Long id){
+    public ResponseEntity<Void> deleteList(@PathVariable Long id){
         Optional<ListCard> currentList = listService.findById(id);
         if (currentList.isPresent()){
             listService.remove(id);
-            return new ResponseEntity<>(currentList.get(), HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

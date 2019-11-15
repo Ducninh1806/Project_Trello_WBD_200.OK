@@ -25,7 +25,7 @@ public class Board {
     private Set<User> userSet;
 
     @JsonIgnore
-    @OneToMany(targetEntity = ListCard.class,fetch = FetchType.EAGER, mappedBy = "boardSet", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = ListCard.class,fetch = FetchType.EAGER, mappedBy = "boardSet")
     private Set<ListCard> listSet;
 
     public Board() {
