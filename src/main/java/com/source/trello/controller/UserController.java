@@ -8,6 +8,7 @@ import com.source.trello.model.Role;
 import com.source.trello.model.RoleName;
 import com.source.trello.model.User;
 import com.source.trello.security.jwt.JwtProvider;
+import com.source.trello.security.service.UserPrinciple;
 import com.source.trello.service.RoleService;
 import com.source.trello.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,9 +108,11 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateJwtToken(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        UserPrinciple userDetails = (UserPrinciple) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(userDetails.getUserId(),
+                userDetails.getEmail(),jwt,
+                userDetails.getUsername(),userDetails.getAuthorities()));
     }
 
     @PostMapping("/signup")
@@ -143,4 +146,6 @@ public class UserController {
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
 
     }
+
+
 }
