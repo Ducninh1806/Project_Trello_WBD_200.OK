@@ -110,9 +110,11 @@ public class UserController {
         String jwt = jwtProvider.generateJwtToken(authentication);
         UserPrinciple userDetails = (UserPrinciple) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse(userDetails.getUserId(),
-                userDetails.getEmail(),jwt,
-                userDetails.getUsername(),userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getUserId(),
+                userDetails.getEmail(),
+                userDetails.getUsername(),
+                userDetails.getAuthorities()));
     }
 
     @PostMapping("/signup")
