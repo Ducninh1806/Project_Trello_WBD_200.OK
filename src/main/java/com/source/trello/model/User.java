@@ -41,8 +41,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @Column(name = "enabled")
-    private boolean enabled;
+//    @Column(name = "enabled")
+//    private boolean enabled;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "userSet", fetch = FetchType.EAGER)
@@ -70,16 +70,6 @@ public class User {
         this.password = password;
         this.roles = roles;
         this.boardSet = boardSet;
-    }
-
-    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, boolean enabled, Set<Board> boardSet, String emailId) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.enabled = enabled;
-        this.boardSet = boardSet;
-        this.emailId = emailId;
     }
 
     public User() {
@@ -142,11 +132,11 @@ public class User {
         this.boardSet = boardSet;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+//    public boolean isEnabled() {
+//        return enabled;
+//    }
+//
+//    public void setEnabled(boolean enabled) {
+//        this.enabled = enabled;
+//    }
 }
