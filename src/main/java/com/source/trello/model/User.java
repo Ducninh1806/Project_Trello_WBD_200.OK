@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user",uniqueConstraints = {
+@Table(name = "user", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "username"
         }),
@@ -23,7 +23,7 @@ public class User {
     private Long userId;
 
     @NotBlank
-    @Size(min = 2,max = 50)
+    @Size(min = 2, max = 50)
     private String username;
 
     @NaturalId
@@ -51,15 +51,15 @@ public class User {
     private String emailId;
 
     public User(String username, String email, String password, Set<Board> boardSet) {
-        this.username= username;
+        this.username = username;
         this.email = email;
 
         this.password = password;
         this.boardSet = boardSet;
     }
 
-    public User(@NotBlank @Size(min = 2, max = 50) String userName, @NotBlank @Size(max = 60) String email,  @NotBlank @Size(min = 3) String password) {
-        this.username= userName;
+    public User(@NotBlank @Size(min = 2, max = 50) String userName, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password) {
+        this.username = userName;
         this.email = email;
         this.password = password;
     }
@@ -73,7 +73,8 @@ public class User {
     }
 
     public User() {
-
+//        super();
+//        this.enabled = false;
     }
 
     public String getEmailId() {
@@ -131,7 +132,7 @@ public class User {
     public void setBoardSet(Set<Board> boardSet) {
         this.boardSet = boardSet;
     }
-
+//
 //    public boolean isEnabled() {
 //        return enabled;
 //    }
