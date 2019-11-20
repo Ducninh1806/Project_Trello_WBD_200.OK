@@ -79,4 +79,16 @@ public class CardController {
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
+    //-----------------------search all by card----------------------
+    @GetMapping("/search")
+    public ResponseEntity<List<Card>> findAllByTitleOrDescription (@RequestParam Optional<String> title, @RequestParam Optional<String> description){
+        List<Card> card;
+        if(title.isPresent() || description.isPresent()){
+            card = cardService.findAllByTitleOrDescription(title.get(),description.get());
+        } else {
+            card = (List<Card>) cardService.findAll();
+        }
+        return new ResponseEntity<>(card, HttpStatus.OK);
+    }
+
 }

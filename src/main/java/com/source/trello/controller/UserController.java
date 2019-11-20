@@ -1,6 +1,7 @@
 package com.source.trello.controller;
 
 import com.source.trello.message.request.LoginForm;
+import com.source.trello.message.request.PassForm;
 import com.source.trello.message.request.SignUpForm;
 import com.source.trello.message.response.JwtResponse;
 import com.source.trello.message.response.ResponseMessage;
@@ -156,4 +157,21 @@ public class UserController {
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
 
+    @PutMapping("/update-password/{id}")
+    public ResponseEntity<?>updatePassword(@Valid @RequestBody PassForm passForm, @PathVariable Long id) {
+        Optional<User> newUser = userService.findById(id);
+        if (newUser == null ){
+            return new ResponseEntity<>(new ResponseMessage("Not found user"),HttpStatus.NOT_FOUND);
+        }
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(passForm.getUsername(), passForm.getOldPassword()));
+            newUser.get().setPassword(passwordEncoder.encode(passForm.getNewPassword()));
+            userService.save(newUser.get());
+            return new ResponseEntity<>(new ResponseMessage("Change password successful"),HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException("Fail!");
+        }
+    }
 }
+

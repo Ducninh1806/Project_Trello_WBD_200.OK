@@ -17,5 +17,6 @@ public interface CardService {
 
     List<Card> findAllByListSet_ListId(Long listId);
 
+    List<Card> findAllByTitleOrDescription(String title, String description);
 
 }
