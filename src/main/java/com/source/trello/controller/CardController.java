@@ -51,6 +51,7 @@ public class CardController {
             currentCard.get().setTitle(card.getTitle());
             currentCard.get().setDescription(card.getDescription());
             currentCard.get().setListSet(card.getListSet());
+            currentCard.get().setUserSetCard(card.getUserSetCard());
 
             cardService.save(currentCard.get());
             return new ResponseEntity<>(currentCard.get(), HttpStatus.OK);

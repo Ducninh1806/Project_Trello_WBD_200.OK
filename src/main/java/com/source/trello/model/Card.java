@@ -1,8 +1,7 @@
 package com.source.trello.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "card")
@@ -14,6 +13,12 @@ public class Card {
     private String title;
     private String description;
 
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_card",
+            joinColumns = @JoinColumn(name = "card_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> userSetCard;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ListCardId")
@@ -30,6 +35,13 @@ public class Card {
     public Card(String title, String description, ListCard listSet) {
         this.title = title;
         this.description = description;
+        this.listSet = listSet;
+    }
+
+    public Card(String title, String description, Set<User> userSetCard, ListCard listSet) {
+        this.title = title;
+        this.description = description;
+        this.userSetCard = userSetCard;
         this.listSet = listSet;
     }
 
@@ -63,5 +75,13 @@ public class Card {
 
     public void setListSet(ListCard listSet) {
         this.listSet = listSet;
+    }
+
+    public Set<User> getUserSetCard() {
+        return userSetCard;
+    }
+
+    public void setUserSetCard(Set<User> userSetCard) {
+        this.userSetCard = userSetCard;
     }
 }
