@@ -1,8 +1,7 @@
 package com.source.trello.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "card")
@@ -13,6 +12,7 @@ public class Card {
     private Long cardId;
     private String title;
     private String description;
+    private String[] colors;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -20,6 +20,13 @@ public class Card {
     private ListCard listSet;
 
     public Card() {
+    }
+
+    public Card(String title, String description, String[] colors, ListCard listSet) {
+        this.title = title;
+        this.description = description;
+        this.colors = colors;
+        this.listSet = listSet;
     }
 
     public Card(String title, String description) {
@@ -63,5 +70,13 @@ public class Card {
 
     public void setListSet(ListCard listSet) {
         this.listSet = listSet;
+    }
+
+    public String[] getColors() {
+        return colors;
+    }
+
+    public void setColors(String[] colors) {
+        this.colors = colors;
     }
 }
