@@ -172,4 +172,11 @@ public class UserController {
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+    //----------------------------find all by username---------------------
+    @GetMapping("/user")
+    public ResponseEntity<List<User>> findAllByUsername(@RequestParam String name) {
+        List<User> userList = userService.findAllByUsernameContaining(name);
+        return new ResponseEntity<>(userList, HttpStatus.OK);
+    }
 }

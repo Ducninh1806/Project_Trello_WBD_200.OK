@@ -39,4 +39,14 @@ public class CardServiceImpl implements CardService {
     public List<Card> findAllByListSet_ListId(Long listId) {
         return cardRepository.findAllByListSet_ListId(listId);
     }
+
+    @Override
+    public List<Card> findAllByTitleContainingOrDescriptionContaining(String title, String description) {
+        return cardRepository.findAllByTitleContainingOrDescriptionContaining(title, description);
+    }
+
+    @Override
+    public List<Card> findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(String title, String description, Long id) {
+        return cardRepository.findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(title, description, id);
+    }
 }

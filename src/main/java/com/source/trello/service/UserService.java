@@ -26,5 +26,7 @@ public interface UserService {
 
     List<User> findAllByBoardSetContaining(Board board);
 
+    List<User> findAllByUsernameContaining(String name);
+
 
 }

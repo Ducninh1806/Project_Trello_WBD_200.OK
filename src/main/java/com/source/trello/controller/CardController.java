@@ -80,4 +80,10 @@ public class CardController {
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
+    //---------------------search card by title or description by List id-------------------------
+    @GetMapping("/card/{id}")
+    public ResponseEntity<List<Card>> findAllCardBySearch(@RequestParam String searchWord, @PathVariable Long id){
+        List<Card> cards = cardService.findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(searchWord, searchWord, id);
+        return new ResponseEntity<>(cards, HttpStatus.OK);
+    }
 }
