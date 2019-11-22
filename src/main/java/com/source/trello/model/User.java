@@ -48,6 +48,10 @@ public class User {
     @ManyToMany(mappedBy = "userSet", fetch = FetchType.EAGER)
     private Set<Board> boardSet;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "userSetCard", fetch = FetchType.EAGER)
+    private Set<Card> cardSet;
+
     private String emailId;
 
     public User(String username, String email, String password, Set<Board> boardSet) {
@@ -72,9 +76,17 @@ public class User {
         this.boardSet = boardSet;
     }
 
+    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, String emailId) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.boardSet = boardSet;
+        this.cardSet = cardSet;
+        this.emailId = emailId;
+    }
+
     public User() {
-//        super();
-//        this.enabled = false;
     }
 
     public String getEmailId() {
@@ -132,7 +144,7 @@ public class User {
     public void setBoardSet(Set<Board> boardSet) {
         this.boardSet = boardSet;
     }
-//
+
 //    public boolean isEnabled() {
 //        return enabled;
 //    }
@@ -140,4 +152,12 @@ public class User {
 //    public void setEnabled(boolean enabled) {
 //        this.enabled = enabled;
 //    }
+
+    public Set<Card> getCardSet() {
+        return cardSet;
+    }
+
+    public void setCardSet(Set<Card> cardSet) {
+        this.cardSet = cardSet;
+    }
 }

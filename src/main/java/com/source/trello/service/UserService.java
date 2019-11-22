@@ -1,7 +1,9 @@
 package com.source.trello.service;
 
+import com.source.trello.model.Board;
 import com.source.trello.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -21,5 +23,10 @@ public interface UserService {
     Boolean existsByUserName(String username);
 
     User findByEmail (String email);
+
+    List<User> findAllByBoardSetContaining(Board board);
+
+    List<User> findAllByUsernameContaining(String name);
+
 
 }

@@ -1,11 +1,13 @@
 package com.source.trello.service.impl;
 
+import com.source.trello.model.Board;
 import com.source.trello.model.User;
 import com.source.trello.repository.UserRepository;
 import com.source.trello.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,4 +55,16 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    @Override
+    public List<User> findAllByBoardSetContaining(Board board) {
+        return userRepository.findAllByBoardSetContaining(board);
+    }
+
+    @Override
+    public List<User> findAllByUsernameContaining(String name) {
+        return userRepository.findAllByUsernameContaining(name);
+    }
+
+
 }

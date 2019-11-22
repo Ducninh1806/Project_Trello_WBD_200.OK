@@ -10,4 +10,8 @@ import java.util.List;
 public interface CardRepository extends PagingAndSortingRepository<Card, Long> {
 
     List<Card> findAllByListSet_ListId(Long listId);
+
+    List<Card> findAllByTitleContainingOrDescriptionContaining(String title, String description);
+
+    List<Card> findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(String title, String description, Long id);
 }

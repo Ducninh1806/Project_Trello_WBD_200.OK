@@ -51,6 +51,7 @@ public class CardController {
             currentCard.get().setTitle(card.getTitle());
             currentCard.get().setDescription(card.getDescription());
             currentCard.get().setListSet(card.getListSet());
+            currentCard.get().setUserSetCard(card.getUserSetCard());
 
             cardService.save(currentCard.get());
             return new ResponseEntity<>(currentCard.get(), HttpStatus.OK);
@@ -79,6 +80,7 @@ public class CardController {
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
+<<<<<<< HEAD
     @PutMapping("/updateColor/{id}")
     public ResponseEntity<?> updateColor(@RequestBody Card card,@PathVariable Long id) {
             Optional<Card> card1 = cardService.findById(id);
@@ -89,5 +91,12 @@ public class CardController {
         cardService.save(card1.get());
         return new ResponseEntity<>(card1, HttpStatus.OK);
 
+=======
+    //---------------------search card by title or description by List id-------------------------
+    @GetMapping("/card/{id}")
+    public ResponseEntity<List<Card>> findAllCardBySearch(@RequestParam String searchWord, @PathVariable Long id){
+        List<Card> cards = cardService.findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(searchWord, searchWord, id);
+        return new ResponseEntity<>(cards, HttpStatus.OK);
+>>>>>>> d724a50408ae8d86251d734e5771b2bbad9d8d22
     }
 }

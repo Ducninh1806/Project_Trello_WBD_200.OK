@@ -4,12 +4,14 @@ import com.source.trello.message.request.LoginForm;
 import com.source.trello.message.request.SignUpForm;
 import com.source.trello.message.response.JwtResponse;
 import com.source.trello.message.response.ResponseMessage;
+import com.source.trello.model.Board;
 import com.source.trello.model.Role;
 import com.source.trello.model.RoleName;
 import com.source.trello.model.User;
 import com.source.trello.security.jwt.JwtProvider;
 import com.source.trello.security.service.EmailSenderService;
 import com.source.trello.security.service.UserPrinciple;
+import com.source.trello.service.BoardService;
 import com.source.trello.service.RoleService;
 import com.source.trello.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,9 @@ public class UserController {
 
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    private BoardService boardService;
 //
 //    @Autowired
 //    private EmailSenderService emailSenderService;
@@ -156,4 +161,22 @@ public class UserController {
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
 
+    //----------------------find all user by board------------------------
+
+    @GetMapping("/board/{id}")
+    public ResponseEntity<List<User>> findAllBoardByUser(@PathVariable Long id) {
+        Optional<Board> board = boardService.findById(id);
+        List<User> users = userService.findAllByBoardSetContaining(board.get());
+            if (users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    //----------------------------find all by username---------------------
+    @GetMapping("/user")
+    public ResponseEntity<List<User>> findAllByUsername(@RequestParam String name) {
+        List<User> userList = userService.findAllByUsernameContaining(name);
+        return new ResponseEntity<>(userList, HttpStatus.OK);
+    }
 }
