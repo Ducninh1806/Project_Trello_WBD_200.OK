@@ -12,6 +12,7 @@ public class Card {
     private Long cardId;
     private String title;
     private String description;
+    private String[] colors;
 
     @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinTable(
@@ -27,6 +28,13 @@ public class Card {
     private String color;
 
     public Card() {
+    }
+
+    public Card(String title, String description, String[] colors, ListCard listSet) {
+        this.title = title;
+        this.description = description;
+        this.colors = colors;
+        this.listSet = listSet;
     }
 
     public Card(String title, String description) {
@@ -93,6 +101,14 @@ public class Card {
 
     public void setListSet(ListCard listSet) {
         this.listSet = listSet;
+    }
+
+    public String[] getColors() {
+        return colors;
+    }
+
+    public void setColors(String[] colors) {
+        this.colors = colors;
     }
 
     public Set<User> getUserSetCard() {

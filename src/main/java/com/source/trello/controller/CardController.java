@@ -80,6 +80,17 @@ public class CardController {
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
+    @PutMapping("/updateColor/{id}")
+    public ResponseEntity<?> updateColor(@RequestBody Card card,@PathVariable Long id) {
+        Optional<Card> card1 = cardService.findById(id);
+        if (!card1.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        card1.get().setColors(card.getColors());
+        cardService.save(card1.get());
+        return new ResponseEntity<>(card1, HttpStatus.OK);
+    }
+
     //---------------------search card by title or description by List id-------------------------
     @GetMapping("/card/{id}")
     public ResponseEntity<List<Card>> findAllCardBySearch(@RequestParam String searchWord, @PathVariable Long id){
