@@ -54,6 +54,8 @@ public class User {
 
     private String emailId;
 
+    private Long userNotification;
+
     public User(String username, String email, String password, Set<Board> boardSet) {
         this.username = username;
         this.email = email;
@@ -86,7 +88,26 @@ public class User {
         this.emailId = emailId;
     }
 
+    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, String emailId, Long userNotification) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.boardSet = boardSet;
+        this.cardSet = cardSet;
+        this.emailId = emailId;
+        this.userNotification = userNotification;
+    }
+
     public User() {
+    }
+
+    public Long getUserNotification() {
+        return userNotification;
+    }
+
+    public void setUserNotification(Long userNotification) {
+        this.userNotification = userNotification;
     }
 
     public String getEmailId() {

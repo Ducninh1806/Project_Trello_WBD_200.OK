@@ -98,6 +98,7 @@ public class UserController {
         user1.get().setPassword(user.getPassword());
         user1.get().setBoardSet(user.getBoardSet());
         user1.get().setUsername(user.getUsername());
+        user1.get().setUserNotification(user.getUserNotification());
 
         userService.save(user1.get());
         return new ResponseEntity<>(user1.get(), HttpStatus.OK);

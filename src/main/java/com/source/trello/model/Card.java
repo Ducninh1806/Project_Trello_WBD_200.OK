@@ -24,6 +24,8 @@ public class Card {
     @JoinColumn(name = "ListCardId")
     private ListCard listSet;
 
+    private String color;
+
     public Card() {
     }
 
@@ -43,6 +45,22 @@ public class Card {
         this.description = description;
         this.userSetCard = userSetCard;
         this.listSet = listSet;
+    }
+
+    public Card(String title, String description, Set<User> userSetCard, ListCard listSet, String color) {
+        this.title = title;
+        this.description = description;
+        this.userSetCard = userSetCard;
+        this.listSet = listSet;
+        this.color = color;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Long getCardId() {
