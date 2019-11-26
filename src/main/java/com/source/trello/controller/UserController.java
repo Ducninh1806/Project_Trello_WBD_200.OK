@@ -1,6 +1,7 @@
 package com.source.trello.controller;
 
 import com.source.trello.message.request.LoginForm;
+import com.source.trello.message.request.PasswordForm;
 import com.source.trello.message.request.SignUpForm;
 import com.source.trello.message.response.JwtResponse;
 import com.source.trello.message.response.ResponseMessage;
@@ -142,6 +143,7 @@ public class UserController {
                     HttpStatus.BAD_REQUEST);
         }
 
+
         User user1 = new User();
 
         user1.setUsername(signUpRequest.getUsername());
@@ -160,6 +162,23 @@ public class UserController {
         userService.save(user1);
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
+    }
+
+    @PutMapping("/update-password/{id}")
+    public ResponseEntity<?> updatePassword(@PathVariable("id") Long id,@Valid @RequestBody PasswordForm passwordForm) {
+        Optional<User> user = userService.findById(id);
+        if (!user.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(passwordForm.getUsername(), passwordForm.getCurrentPassword()));
+            user.get().setPassword(passwordEncoder.encode(passwordForm.getNewPassword()));
+            userService.save(user.get());
+            return new ResponseEntity<>(new ResponseMessage("Change pass word successfully!"),HttpStatus.OK);
+        }catch (Exception e) {
+            throw new RuntimeException("Fail!");
+        }
     }
 
     //----------------------find all user by board------------------------
