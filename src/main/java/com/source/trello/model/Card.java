@@ -28,6 +28,10 @@ public class Card {
     private ListCard listSet;
 
     @JsonIgnore
+    @OneToMany(targetEntity = Comment.class,fetch = FetchType.EAGER, mappedBy = "cardComment")
+    private Set<Comment> commentSet;
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "cardColorSet", fetch = FetchType.EAGER)
     private Set<Color> colorSet;
 
@@ -86,6 +90,25 @@ public class Card {
         this.listSet = listSet;
         this.colorSet = colorSet;
         this.notification = notification;
+    }
+
+    public Card(String title, String description, String[] colors, Set<User> userSetCard, ListCard listSet, Set<Comment> commentSet, Set<Color> colorSet, String[] notification) {
+        this.title = title;
+        this.description = description;
+        this.colors = colors;
+        this.userSetCard = userSetCard;
+        this.listSet = listSet;
+        this.commentSet = commentSet;
+        this.colorSet = colorSet;
+        this.notification = notification;
+    }
+
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
     }
 
     public String[] getNotification() {

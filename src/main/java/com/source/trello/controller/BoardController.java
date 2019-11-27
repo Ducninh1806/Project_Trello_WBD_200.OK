@@ -43,10 +43,9 @@ public class BoardController {
 
     @PostMapping
     public ResponseEntity<Board> createBoard(@RequestBody Board board) {
-        Board board1 = board;
         board.setTime(new Date());
         boardService.save(board);
-        return new ResponseEntity<>(board1, HttpStatus.CREATED);
+        return new ResponseEntity<>(board, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

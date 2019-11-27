@@ -52,6 +52,10 @@ public class User {
     @ManyToMany(mappedBy = "userSetCard", fetch = FetchType.EAGER)
     private Set<Card> cardSet;
 
+    @JsonIgnore
+    @OneToMany(targetEntity = Comment.class,fetch = FetchType.EAGER, mappedBy = "userComment")
+    private Set<Comment> commentSet;
+
     private String emailId;
 
     private Long userNotification;
@@ -113,7 +117,28 @@ public class User {
         this.cardNoti = cardNoti;
     }
 
+    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, Set<Comment> commentSet, String emailId, Long userNotification, Long[] cardNoti) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.boardSet = boardSet;
+        this.cardSet = cardSet;
+        this.commentSet = commentSet;
+        this.emailId = emailId;
+        this.userNotification = userNotification;
+        this.cardNoti = cardNoti;
+    }
+
     public User() {
+    }
+
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
     }
 
     public Long[] getCardNoti() {
