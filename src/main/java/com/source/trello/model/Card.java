@@ -1,5 +1,7 @@
 package com.source.trello.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -25,7 +27,11 @@ public class Card {
     @JoinColumn(name = "ListCardId")
     private ListCard listSet;
 
-    private String color;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "cardColorSet", fetch = FetchType.EAGER)
+    private Set<Color> colorSet;
+
+    private String[] notification;
 
     public Card() {
     }
@@ -55,20 +61,47 @@ public class Card {
         this.listSet = listSet;
     }
 
-    public Card(String title, String description, Set<User> userSetCard, ListCard listSet, String color) {
+    public Card(String title, String description, String[] colors, Set<User> userSetCard, ListCard listSet) {
         this.title = title;
         this.description = description;
+        this.colors = colors;
         this.userSetCard = userSetCard;
         this.listSet = listSet;
-        this.color = color;
     }
 
-    public String getColor() {
-        return color;
+    public Card(String title, String description, String[] colors, Set<User> userSetCard, ListCard listSet, Set<Color> colorSet) {
+        this.title = title;
+        this.description = description;
+        this.colors = colors;
+        this.userSetCard = userSetCard;
+        this.listSet = listSet;
+        this.colorSet = colorSet;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public Card(String title, String description, String[] colors, Set<User> userSetCard, ListCard listSet, Set<Color> colorSet, String[] notification) {
+        this.title = title;
+        this.description = description;
+        this.colors = colors;
+        this.userSetCard = userSetCard;
+        this.listSet = listSet;
+        this.colorSet = colorSet;
+        this.notification = notification;
+    }
+
+    public String[] getNotification() {
+        return notification;
+    }
+
+    public void setNotification(String[] notification) {
+        this.notification = notification;
+    }
+
+    public Set<Color> getColorSet() {
+        return colorSet;
+    }
+
+    public void setColorSet(Set<Color> colorSet) {
+        this.colorSet = colorSet;
     }
 
     public Long getCardId() {

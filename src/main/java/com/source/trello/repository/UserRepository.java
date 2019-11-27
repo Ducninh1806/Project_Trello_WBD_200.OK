@@ -1,6 +1,7 @@
 package com.source.trello.repository;
 
 import com.source.trello.model.Board;
+import com.source.trello.model.Card;
 import com.source.trello.model.User;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -21,4 +22,6 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     List<User> findAllByBoardSetContaining(Board board);
 
     List<User> findAllByUsernameContaining(String name);
+
+    List<User> findAllByCardSetContaining(Card card);
 }

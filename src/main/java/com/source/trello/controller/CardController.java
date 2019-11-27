@@ -1,6 +1,7 @@
 package com.source.trello.controller;
 
 import com.source.trello.model.Card;
+import com.source.trello.model.User;
 import com.source.trello.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,9 @@ public class CardController {
             currentCard.get().setDescription(card.getDescription());
             currentCard.get().setListSet(card.getListSet());
             currentCard.get().setUserSetCard(card.getUserSetCard());
+            currentCard.get().setColors(card.getColors());
+            currentCard.get().setColorSet(card.getColorSet());
+            currentCard.get().setNotification(card.getNotification());
 
             cardService.save(currentCard.get());
             return new ResponseEntity<>(currentCard.get(), HttpStatus.OK);
@@ -97,4 +101,19 @@ public class CardController {
         List<Card> cards = cardService.findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(searchWord, searchWord, id);
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
+
+    //-------------------------------search card by users-------------------------------------------
+    @GetMapping("/user")
+    public ResponseEntity<List<Card>> findAllCardByUser(@RequestBody User[] user){
+        List<Card> cardList = cardService.findAllByUserSetCardContaining(user);
+        return new ResponseEntity<>(cardList, HttpStatus.OK);
+    }
+
+    //-------------------------------search card by colors------------------------------------------
+    @PostMapping("/color")
+    public ResponseEntity<List<Card>> findAllCardByColor(@RequestBody String[] colors){
+        List<Card> cardList = cardService.findAllByColorsContaining(colors);
+        return new ResponseEntity<>(cardList, HttpStatus.OK);
+    }
+
 }
