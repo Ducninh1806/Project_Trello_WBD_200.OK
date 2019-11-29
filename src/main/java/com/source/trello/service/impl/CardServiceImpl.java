@@ -52,7 +52,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<Card> findAllByUserSetCardContaining(User[] user) {
+    public List<Card> findAllByUserSetCardContaining(User user) {
         return cardRepository.findAllByUserSetCardContaining(user);
     }
 

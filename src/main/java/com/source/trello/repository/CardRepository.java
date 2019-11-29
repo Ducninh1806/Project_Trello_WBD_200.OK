@@ -16,7 +16,7 @@ public interface CardRepository extends PagingAndSortingRepository<Card, Long> {
 
     List<Card> findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(String title, String description, Long id);
 
-    List<Card> findAllByUserSetCardContaining(User[] user);
+    List<Card> findAllByUserSetCardContaining(User user);
 
     List<Card> findAllByColors(String[] colors);
 }

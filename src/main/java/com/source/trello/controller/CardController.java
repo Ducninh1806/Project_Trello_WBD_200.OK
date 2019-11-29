@@ -3,6 +3,7 @@ package com.source.trello.controller;
 import com.source.trello.model.Card;
 import com.source.trello.model.User;
 import com.source.trello.service.CardService;
+import com.source.trello.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,9 @@ public class CardController {
 
     @Autowired
     private CardService cardService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<List<Card>> findAllCard(){
@@ -103,8 +107,8 @@ public class CardController {
     }
 
     //-------------------------------search card by users-------------------------------------------
-    @GetMapping("/user")
-    public ResponseEntity<List<Card>> findAllCardByUser(@RequestBody User[] user){
+    @PostMapping("/user")
+    public ResponseEntity<List<Card>> findAllCardByUser(@RequestBody User user){
         List<Card> cardList = cardService.findAllByUserSetCardContaining(user);
         return new ResponseEntity<>(cardList, HttpStatus.OK);
     }
