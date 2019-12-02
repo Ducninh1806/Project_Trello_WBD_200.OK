@@ -1,6 +1,7 @@
 package com.source.trello.service;
 
 import com.source.trello.model.Board;
+import com.source.trello.model.Card;
 import com.source.trello.model.User;
 
 import java.util.List;
@@ -28,5 +29,6 @@ public interface UserService {
 
     List<User> findAllByUsernameContaining(String name);
 
+    List<User> findAllByCardSetContaining(Card card);
 
 }

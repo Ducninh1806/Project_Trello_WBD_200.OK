@@ -1,6 +1,7 @@
 package com.source.trello.service.impl;
 
 import com.source.trello.model.Card;
+import com.source.trello.model.User;
 import com.source.trello.repository.CardRepository;
 import com.source.trello.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,15 @@ public class CardServiceImpl implements CardService {
     @Override
     public List<Card> findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(String title, String description, Long id) {
         return cardRepository.findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(title, description, id);
+    }
+
+    @Override
+    public List<Card> findAllByUserSetCardContaining(User user) {
+        return cardRepository.findAllByUserSetCardContaining(user);
+    }
+
+    @Override
+    public List<Card> findAllByColorsContaining(String[] colors) {
+        return cardRepository.findAllByColors(colors);
     }
 }

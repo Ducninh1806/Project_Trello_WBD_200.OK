@@ -5,14 +5,12 @@ import com.source.trello.message.request.PasswordForm;
 import com.source.trello.message.request.SignUpForm;
 import com.source.trello.message.response.JwtResponse;
 import com.source.trello.message.response.ResponseMessage;
-import com.source.trello.model.Board;
-import com.source.trello.model.Role;
-import com.source.trello.model.RoleName;
-import com.source.trello.model.User;
+import com.source.trello.model.*;
 import com.source.trello.security.jwt.JwtProvider;
 import com.source.trello.security.service.EmailSenderService;
 import com.source.trello.security.service.UserPrinciple;
 import com.source.trello.service.BoardService;
+import com.source.trello.service.CardService;
 import com.source.trello.service.RoleService;
 import com.source.trello.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +53,9 @@ public class UserController {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private CardService cardService;
 //
 //    @Autowired
 //    private EmailSenderService emailSenderService;
@@ -100,6 +101,7 @@ public class UserController {
         user1.get().setBoardSet(user.getBoardSet());
         user1.get().setUsername(user.getUsername());
         user1.get().setUserNotification(user.getUserNotification());
+        user1.get().setCardNoti(user.getCardNoti());
 
         userService.save(user1.get());
         return new ResponseEntity<>(user1.get(), HttpStatus.OK);
@@ -198,5 +200,17 @@ public class UserController {
     public ResponseEntity<List<User>> findAllByUsername(@RequestParam String name) {
         List<User> userList = userService.findAllByUsernameContaining(name);
         return new ResponseEntity<>(userList, HttpStatus.OK);
+    }
+
+    //----------------------find all user by card------------------------
+
+    @GetMapping("/card/{id}")
+    public ResponseEntity<List<User>> findAllUserByCard(@PathVariable Long id) {
+        Optional<Card> card = cardService.findById(id);
+        List<User> users = userService.findAllByCardSetContaining(card.get());
+        if (users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

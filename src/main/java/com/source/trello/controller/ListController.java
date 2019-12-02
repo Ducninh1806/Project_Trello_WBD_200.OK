@@ -55,8 +55,6 @@ public class ListController {
         if (currentList.isPresent()) {
             currentList.get().setListId(listCard.getListId());
             currentList.get().setListName(listCard.getListName());
-            currentList.get().setBoardSet(listCard.getBoardSet());
-//            currentList.get().setCardSet(listCard.getCardSet());
             listService.save(currentList.get());
             return new ResponseEntity<>(currentList.get(), HttpStatus.OK);
         }
@@ -84,38 +82,47 @@ public class ListController {
         return new ResponseEntity<>(listCards, HttpStatus.OK);
     }
 
-    @PutMapping("/card")
+    //---------------------------swap listId bewteen two cardSet----------------------------------
+    @PutMapping("/cardSwap")
     public ResponseEntity<ListCard> updateListAndCard(@RequestParam Long previousId, Long currentId) {
+        List<Card> cards1 = cardService.findAllByListSet_ListId(previousId);
+        List<Card> cards2 = cardService.findAllByListSet_ListId(currentId);
+        Optional<ListCard> listCard1 = listService.findById(previousId);
+        Optional<ListCard> listCard2 = listService.findById(currentId);
 
-        Optional<ListCard> listCard = listService.findById(currentId);
-        Optional<ListCard> listCard2 = listService.findById(previousId);
-        List<Card> cards = cardService.findAllByListSet_ListId(previousId);
-        List<Card> cards1 = cardService.findAllByListSet_ListId(currentId);
-
-        ListCard listCardMid = new ListCard();
-        listCardMid.setListName(listCard.get().getListName());
-        listCardMid.setBoardSet(listCard.get().getBoardSet());
-
-        listCard.get().setListName(listCard2.get().getListName());
-        listCard.get().setBoardSet(listCard2.get().getBoardSet());
-        listService.save(listCard.get());
-
-        listCard2.get().setListName(listCardMid.getListName());
-        listCard2.get().setBoardSet(listCardMid.getBoardSet());
-        listService.save(listCard2.get());
-
-
-        for (Card value : cards) {
-            value.setListSet(listCard.get());
-            cardService.save(value);
+        for (Card card : cards1) {
+            card.setListSet(listCard2.get());
+            cardService.save(card);
         }
 
-        for (Card value : cards1) {
-            value.setListSet(listCard2.get());
-            cardService.save(value);
+        for (Card card : cards2) {
+            card.setListSet(listCard1.get());
+            cardService.save(card);
         }
-
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<ListCard>(listCard1.get(), HttpStatus.OK);
     }
+
+ //-------------------------------change detail of list---------------------------------------------
+ @PutMapping("/listSwap")
+ public ResponseEntity<ListCard> swapListDetail(@RequestParam Long previousId, Long currentId) {
+     Optional<ListCard> listCard1 = listService.findById(previousId);
+     Optional<ListCard> listCard2 = listService.findById(currentId);
+
+     ListCard listCard = new ListCard();
+
+     listCard.setListName(listCard1.get().getListName());
+
+     listCard1.get().setListName(listCard2.get().getListName());
+     listCard1.get().setBoardSet(listCard2.get().getBoardSet());
+
+     listService.save(listCard1.get());
+
+     listCard2.get().setListName(listCard.getListName());
+
+     listService.save(listCard2.get());
+
+     return new ResponseEntity<>(listCard1.get(), HttpStatus.OK);
+ }
+
+
 }

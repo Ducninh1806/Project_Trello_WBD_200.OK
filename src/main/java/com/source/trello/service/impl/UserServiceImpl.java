@@ -1,6 +1,7 @@
 package com.source.trello.service.impl;
 
 import com.source.trello.model.Board;
+import com.source.trello.model.Card;
 import com.source.trello.model.User;
 import com.source.trello.repository.UserRepository;
 import com.source.trello.service.UserService;
@@ -64,6 +65,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllByUsernameContaining(String name) {
         return userRepository.findAllByUsernameContaining(name);
+    }
+
+    @Override
+    public List<User> findAllByCardSetContaining(Card card) {
+        return userRepository.findAllByCardSetContaining(card);
     }
 
 
