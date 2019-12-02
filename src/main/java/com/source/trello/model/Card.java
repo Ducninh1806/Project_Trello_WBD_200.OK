@@ -37,6 +37,10 @@ public class Card {
 
     private String[] notification;
 
+    @JsonIgnore
+    @OneToMany(targetEntity = FileUpload.class,fetch = FetchType.EAGER, mappedBy = "card")
+    private Set<FileUpload> fileUploadSet;
+
     public Card() {
     }
 
@@ -101,6 +105,26 @@ public class Card {
         this.commentSet = commentSet;
         this.colorSet = colorSet;
         this.notification = notification;
+    }
+
+    public Card(String title, String description, String[] colors, Set<User> userSetCard, ListCard listSet, Set<Comment> commentSet, Set<Color> colorSet, String[] notification, Set<FileUpload> fileUploadSet) {
+        this.title = title;
+        this.description = description;
+        this.colors = colors;
+        this.userSetCard = userSetCard;
+        this.listSet = listSet;
+        this.commentSet = commentSet;
+        this.colorSet = colorSet;
+        this.notification = notification;
+        this.fileUploadSet = fileUploadSet;
+    }
+
+    public Set<FileUpload> getFileUploadSet() {
+        return fileUploadSet;
+    }
+
+    public void setFileUploadSet(Set<FileUpload> fileUploadSet) {
+        this.fileUploadSet = fileUploadSet;
     }
 
     public Set<Comment> getCommentSet() {
