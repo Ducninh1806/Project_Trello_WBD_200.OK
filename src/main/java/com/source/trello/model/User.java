@@ -62,6 +62,8 @@ public class User {
 
     private Long[] cardNoti;
 
+    private String avatarLink;
+
     public User(String username, String email, String password, Set<Board> boardSet) {
         this.username = username;
         this.email = email;
@@ -130,7 +132,29 @@ public class User {
         this.cardNoti = cardNoti;
     }
 
+    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, Set<Comment> commentSet, String emailId, Long userNotification, Long[] cardNoti, String avatarLink) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.boardSet = boardSet;
+        this.cardSet = cardSet;
+        this.commentSet = commentSet;
+        this.emailId = emailId;
+        this.userNotification = userNotification;
+        this.cardNoti = cardNoti;
+        this.avatarLink = avatarLink;
+    }
+
     public User() {
+    }
+
+    public String getAvatarLink() {
+        return avatarLink;
+    }
+
+    public void setAvatarLink(String avatarLink) {
+        this.avatarLink = avatarLink;
     }
 
     public Set<Comment> getCommentSet() {

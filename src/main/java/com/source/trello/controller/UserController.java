@@ -23,7 +23,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -56,7 +55,7 @@ public class UserController {
 
     @Autowired
     private CardService cardService;
-//
+
 //    @Autowired
 //    private EmailSenderService emailSenderService;
 //
@@ -102,6 +101,7 @@ public class UserController {
         user1.get().setUsername(user.getUsername());
         user1.get().setUserNotification(user.getUserNotification());
         user1.get().setCardNoti(user.getCardNoti());
+        user1.get().setAvatarLink(user.getAvatarLink());
 
         userService.save(user1.get());
         return new ResponseEntity<>(user1.get(), HttpStatus.OK);
