@@ -17,7 +17,7 @@ public class ListServiceImpl implements ListService {
 
     @Override
     public Iterable<ListCard> findALl() {
-        return listRepository.findAll();
+        return listRepository.findAllByOrderByOrderNumberAsc();
     }
 
     @Override
@@ -37,6 +37,6 @@ public class ListServiceImpl implements ListService {
 
     @Override
     public List<ListCard> findAllByBoardSet_BoardId(Long boardId) {
-        return listRepository.findAllByBoardSet_BoardId(boardId);
+        return listRepository.findAllByBoardSet_BoardIdOrderByOrderNumber(boardId);
     }
 }

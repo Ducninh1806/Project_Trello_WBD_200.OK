@@ -44,9 +44,10 @@ public class ListController {
 
     @PostMapping
     public ResponseEntity<ListCard> createList(@RequestBody ListCard listCard) {
-        ListCard currentList = listCard;
-        listService.save(currentList);
-        return new ResponseEntity<>(currentList, HttpStatus.CREATED);
+        listService.save(listCard);
+        listCard.setOrderNumber(listCard.getListId());
+        listService.save(listCard);
+        return new ResponseEntity<>(listCard, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -55,6 +56,7 @@ public class ListController {
         if (currentList.isPresent()) {
             currentList.get().setListId(listCard.getListId());
             currentList.get().setListName(listCard.getListName());
+            currentList.get().setOrderNumber(listCard.getOrderNumber());
             listService.save(currentList.get());
             return new ResponseEntity<>(currentList.get(), HttpStatus.OK);
         }

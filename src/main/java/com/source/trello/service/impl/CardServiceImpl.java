@@ -18,7 +18,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public Iterable<Card> findAll() {
-        return cardRepository.findAll();
+        return cardRepository.findAllByOrderByOrderNumberAsc();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public List<Card> findAllByListSet_ListId(Long listId) {
-        return cardRepository.findAllByListSet_ListId(listId);
+        return cardRepository.findAllByListSet_ListIdOrderByOrderNumberAsc(listId);
     }
 
     @Override

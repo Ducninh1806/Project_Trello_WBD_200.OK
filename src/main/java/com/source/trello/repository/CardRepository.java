@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CardRepository extends PagingAndSortingRepository<Card, Long> {
 
-    List<Card> findAllByListSet_ListId(Long listId);
+    List<Card> findAllByListSet_ListIdOrderByOrderNumberAsc(Long listId);
 
     List<Card> findAllByTitleContainingOrDescriptionContaining(String title, String description);
 
@@ -19,4 +19,6 @@ public interface CardRepository extends PagingAndSortingRepository<Card, Long> {
     List<Card> findAllByUserSetCardContaining(User user);
 
     List<Card> findAllByColors(String[] colors);
+
+    List<Card> findAllByOrderByOrderNumberAsc();
 }

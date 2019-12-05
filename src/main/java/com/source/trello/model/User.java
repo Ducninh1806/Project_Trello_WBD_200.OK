@@ -41,9 +41,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-//    @Column(name = "enabled")
-//    private boolean enabled;
-
     @JsonIgnore
     @ManyToMany(mappedBy = "userSet", fetch = FetchType.EAGER)
     private Set<Board> boardSet;
@@ -58,7 +55,9 @@ public class User {
 
     private String emailId;
 
-    private Long userNotification;
+    @JsonIgnore
+    @OneToMany(targetEntity = Notification.class, fetch = FetchType.EAGER, mappedBy = "userCardNoti")
+    private Set<Notification> cardNotificationSet;
 
     private Long[] cardNoti;
 
@@ -96,7 +95,7 @@ public class User {
         this.emailId = emailId;
     }
 
-    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, String emailId, Long userNotification) {
+    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, String emailId, Long[] cardNoti) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -104,22 +103,10 @@ public class User {
         this.boardSet = boardSet;
         this.cardSet = cardSet;
         this.emailId = emailId;
-        this.userNotification = userNotification;
-    }
-
-    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, String emailId, Long userNotification, Long[] cardNoti) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.boardSet = boardSet;
-        this.cardSet = cardSet;
-        this.emailId = emailId;
-        this.userNotification = userNotification;
         this.cardNoti = cardNoti;
     }
 
-    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, Set<Comment> commentSet, String emailId, Long userNotification, Long[] cardNoti) {
+    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, Set<Comment> commentSet, String emailId, Long[] cardNoti) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -128,11 +115,10 @@ public class User {
         this.cardSet = cardSet;
         this.commentSet = commentSet;
         this.emailId = emailId;
-        this.userNotification = userNotification;
         this.cardNoti = cardNoti;
     }
 
-    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, Set<Comment> commentSet, String emailId, Long userNotification, Long[] cardNoti, String avatarLink) {
+    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, Set<Comment> commentSet, String emailId, Long[] cardNoti, String avatarLink) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -141,12 +127,33 @@ public class User {
         this.cardSet = cardSet;
         this.commentSet = commentSet;
         this.emailId = emailId;
-        this.userNotification = userNotification;
+        this.cardNoti = cardNoti;
+        this.avatarLink = avatarLink;
+    }
+
+    public User(@NotBlank @Size(min = 2, max = 50) String username, @NotBlank @Size(max = 60) String email, @NotBlank @Size(min = 3) String password, Set<Role> roles, Set<Board> boardSet, Set<Card> cardSet, Set<Comment> commentSet, String emailId, Set<Notification> cardNotificationSet, Long[] cardNoti, String avatarLink) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.boardSet = boardSet;
+        this.cardSet = cardSet;
+        this.commentSet = commentSet;
+        this.emailId = emailId;
+        this.cardNotificationSet = cardNotificationSet;
         this.cardNoti = cardNoti;
         this.avatarLink = avatarLink;
     }
 
     public User() {
+    }
+
+    public Set<Notification> getCardNotificationSet() {
+        return cardNotificationSet;
+    }
+
+    public void setCardNotificationSet(Set<Notification> cardNotificationSet) {
+        this.cardNotificationSet = cardNotificationSet;
     }
 
     public String getAvatarLink() {
@@ -171,14 +178,6 @@ public class User {
 
     public void setCardNoti(Long[] cardNoti) {
         this.cardNoti = cardNoti;
-    }
-
-    public Long getUserNotification() {
-        return userNotification;
-    }
-
-    public void setUserNotification(Long userNotification) {
-        this.userNotification = userNotification;
     }
 
     public String getEmailId() {
@@ -236,14 +235,6 @@ public class User {
     public void setBoardSet(Set<Board> boardSet) {
         this.boardSet = boardSet;
     }
-
-//    public boolean isEnabled() {
-//        return enabled;
-//    }
-//
-//    public void setEnabled(boolean enabled) {
-//        this.enabled = enabled;
-//    }
 
     public Set<Card> getCardSet() {
         return cardSet;

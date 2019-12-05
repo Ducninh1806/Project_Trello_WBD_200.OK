@@ -24,33 +24,35 @@ public class CardController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<Card>> findAllCard(){
-        List<Card> cards =(List<Card>) cardService.findAll();
-        if (cards.isEmpty()){
+    public ResponseEntity<List<Card>> findAllCard() {
+        List<Card> cards = (List<Card>) cardService.findAll();
+        if (cards.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Card> findByIdCard(@PathVariable Long id){
+    public ResponseEntity<Card> findByIdCard(@PathVariable Long id) {
         Optional<Card> card = cardService.findById(id);
-        if (card.isPresent()){
+        if (card.isPresent()) {
             return new ResponseEntity<>(card.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<Card> createCard(@RequestBody Card card){
-         cardService.save(card);
+    public ResponseEntity<Card> createCard(@RequestBody Card card) {
+        cardService.save(card);
+        card.setOrderNumber(card.getCardId());
+        cardService.save(card);
         return new ResponseEntity<>(card, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Card> updateCard(@PathVariable Long id, @RequestBody Card card){
+    public ResponseEntity<Card> updateCard(@PathVariable Long id, @RequestBody Card card) {
         Optional<Card> currentCard = cardService.findById(id);
-        if (currentCard.isPresent()){
+        if (currentCard.isPresent()) {
 
             currentCard.get().setCardId(card.getCardId());
             currentCard.get().setTitle(card.getTitle());
@@ -59,7 +61,7 @@ public class CardController {
             currentCard.get().setUserSetCard(card.getUserSetCard());
             currentCard.get().setColors(card.getColors());
             currentCard.get().setColorSet(card.getColorSet());
-            currentCard.get().setNotification(card.getNotification());
+            currentCard.get().setOrderNumber(card.getOrderNumber());
 
             cardService.save(currentCard.get());
             return new ResponseEntity<>(currentCard.get(), HttpStatus.OK);
@@ -69,9 +71,9 @@ public class CardController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Card> deleteCard(@PathVariable Long id){
+    public ResponseEntity<Card> deleteCard(@PathVariable Long id) {
         Optional<Card> card = cardService.findById(id);
-        if (card.isPresent()){
+        if (card.isPresent()) {
             cardService.remove(id);
             return new ResponseEntity<>(card.get(), HttpStatus.OK);
         }
@@ -80,16 +82,16 @@ public class CardController {
 
     //-----------------------find all by list----------------------
     @GetMapping("/list/{id}")
-    public ResponseEntity<List<Card>> findAllCardByList(@PathVariable Long id){
+    public ResponseEntity<List<Card>> findAllCardByList(@PathVariable Long id) {
         List<Card> cards = cardService.findAllByListSet_ListId(id);
-        if (cards.isEmpty()){
+        if (cards.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
     @PutMapping("/updateColor/{id}")
-    public ResponseEntity<?> updateColor(@RequestBody Card card,@PathVariable Long id) {
+    public ResponseEntity<?> updateColor(@RequestBody Card card, @PathVariable Long id) {
         Optional<Card> card1 = cardService.findById(id);
         if (!card1.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -101,21 +103,21 @@ public class CardController {
 
     //---------------------search card by title or description by List id-------------------------
     @GetMapping("/card/{id}")
-    public ResponseEntity<List<Card>> findAllCardBySearch(@RequestParam String searchWord, @PathVariable Long id){
+    public ResponseEntity<List<Card>> findAllCardBySearch(@RequestParam String searchWord, @PathVariable Long id) {
         List<Card> cards = cardService.findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(searchWord, searchWord, id);
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
     //-------------------------------search card by users-------------------------------------------
     @PostMapping("/user")
-    public ResponseEntity<List<Card>> findAllCardByUser(@RequestBody User user){
+    public ResponseEntity<List<Card>> findAllCardByUser(@RequestBody User user) {
         List<Card> cardList = cardService.findAllByUserSetCardContaining(user);
         return new ResponseEntity<>(cardList, HttpStatus.OK);
     }
 
     //-------------------------------search card by colors------------------------------------------
     @PostMapping("/color")
-    public ResponseEntity<List<Card>> findAllCardByColor(@RequestBody String[] colors){
+    public ResponseEntity<List<Card>> findAllCardByColor(@RequestBody String[] colors) {
         List<Card> cardList = cardService.findAllByColorsContaining(colors);
         return new ResponseEntity<>(cardList, HttpStatus.OK);
     }

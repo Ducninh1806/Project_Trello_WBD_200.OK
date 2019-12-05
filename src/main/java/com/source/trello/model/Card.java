@@ -16,6 +16,8 @@ public class Card {
     private String description;
     private String[] colors;
 
+    private Long orderNumber;
+
     @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_card",
@@ -35,11 +37,13 @@ public class Card {
     @ManyToMany(mappedBy = "cardColorSet", fetch = FetchType.EAGER)
     private Set<Color> colorSet;
 
-    private String[] notification;
+    @JsonIgnore
+    @OneToMany(targetEntity = FileUpload.class, fetch = FetchType.EAGER, mappedBy = "card")
+    private Set<FileUpload> fileUploadSet;
 
     @JsonIgnore
-    @OneToMany(targetEntity = FileUpload.class,fetch = FetchType.EAGER, mappedBy = "card")
-    private Set<FileUpload> fileUploadSet;
+    @OneToMany(targetEntity = Notification.class, fetch = FetchType.EAGER, mappedBy = "cardNoti")
+    private Set<Notification> cardNotifications;
 
     public Card() {
     }
@@ -86,17 +90,8 @@ public class Card {
         this.colorSet = colorSet;
     }
 
-    public Card(String title, String description, String[] colors, Set<User> userSetCard, ListCard listSet, Set<Color> colorSet, String[] notification) {
-        this.title = title;
-        this.description = description;
-        this.colors = colors;
-        this.userSetCard = userSetCard;
-        this.listSet = listSet;
-        this.colorSet = colorSet;
-        this.notification = notification;
-    }
 
-    public Card(String title, String description, String[] colors, Set<User> userSetCard, ListCard listSet, Set<Comment> commentSet, Set<Color> colorSet, String[] notification) {
+    public Card(String title, String description, String[] colors, Set<User> userSetCard, ListCard listSet, Set<Comment> commentSet, Set<Color> colorSet) {
         this.title = title;
         this.description = description;
         this.colors = colors;
@@ -104,10 +99,9 @@ public class Card {
         this.listSet = listSet;
         this.commentSet = commentSet;
         this.colorSet = colorSet;
-        this.notification = notification;
     }
 
-    public Card(String title, String description, String[] colors, Set<User> userSetCard, ListCard listSet, Set<Comment> commentSet, Set<Color> colorSet, String[] notification, Set<FileUpload> fileUploadSet) {
+    public Card(String title, String description, String[] colors, Set<User> userSetCard, ListCard listSet, Set<Comment> commentSet, Set<Color> colorSet, Set<FileUpload> fileUploadSet) {
         this.title = title;
         this.description = description;
         this.colors = colors;
@@ -115,8 +109,48 @@ public class Card {
         this.listSet = listSet;
         this.commentSet = commentSet;
         this.colorSet = colorSet;
-        this.notification = notification;
         this.fileUploadSet = fileUploadSet;
+    }
+
+    public Card(String title, String description, String[] colors, Long orderNumber, Set<User> userSetCard, ListCard listSet, Set<Comment> commentSet, Set<Color> colorSet, Set<FileUpload> fileUploadSet) {
+        this.title = title;
+        this.description = description;
+        this.colors = colors;
+        this.orderNumber = orderNumber;
+        this.userSetCard = userSetCard;
+        this.listSet = listSet;
+        this.commentSet = commentSet;
+        this.colorSet = colorSet;
+        this.fileUploadSet = fileUploadSet;
+    }
+
+    public Card(String title, String description, String[] colors, Long orderNumber, Set<User> userSetCard, ListCard listSet, Set<Comment> commentSet, Set<Color> colorSet, Set<FileUpload> fileUploadSet, Set<Notification> cardNotifications) {
+        this.title = title;
+        this.description = description;
+        this.colors = colors;
+        this.orderNumber = orderNumber;
+        this.userSetCard = userSetCard;
+        this.listSet = listSet;
+        this.commentSet = commentSet;
+        this.colorSet = colorSet;
+        this.fileUploadSet = fileUploadSet;
+        this.cardNotifications = cardNotifications;
+    }
+
+    public Set<Notification> getCardNotifications() {
+        return cardNotifications;
+    }
+
+    public void setCardNotifications(Set<Notification> cardNotifications) {
+        this.cardNotifications = cardNotifications;
+    }
+
+    public Long getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(Long orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     public Set<FileUpload> getFileUploadSet() {
@@ -133,14 +167,6 @@ public class Card {
 
     public void setCommentSet(Set<Comment> commentSet) {
         this.commentSet = commentSet;
-    }
-
-    public String[] getNotification() {
-        return notification;
-    }
-
-    public void setNotification(String[] notification) {
-        this.notification = notification;
     }
 
     public Set<Color> getColorSet() {

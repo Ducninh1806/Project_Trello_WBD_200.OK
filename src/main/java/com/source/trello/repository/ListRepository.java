@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface ListRepository extends PagingAndSortingRepository<ListCard, Long> {
 
-    List<ListCard> findAllByBoardSet_BoardId(Long boardId);
+    List<ListCard> findAllByBoardSet_BoardIdOrderByOrderNumber(Long boardId);
+
+    List<ListCard> findAllByOrderByOrderNumberAsc();
 }

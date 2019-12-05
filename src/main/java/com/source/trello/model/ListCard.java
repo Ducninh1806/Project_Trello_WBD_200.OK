@@ -23,6 +23,8 @@ public class ListCard {
     @OneToMany(targetEntity = Card.class,fetch = FetchType.EAGER, mappedBy = "listSet")
     private Set<Card> cardSet;
 
+    private Long orderNumber;
+
     public ListCard() {
     }
 
@@ -34,6 +36,21 @@ public class ListCard {
         this.listName = listName;
         this.boardSet = boardSet;
         this.cardSet = cardSet;
+    }
+
+    public ListCard(Long listId, Board boardSet, Set<Card> cardSet, Long orderNumber) {
+        this.listId = listId;
+        this.boardSet = boardSet;
+        this.cardSet = cardSet;
+        this.orderNumber = orderNumber;
+    }
+
+    public Long getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(Long orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     public Long getListId() {

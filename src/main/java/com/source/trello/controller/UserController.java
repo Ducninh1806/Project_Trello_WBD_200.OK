@@ -99,7 +99,6 @@ public class UserController {
         user1.get().setPassword(user.getPassword());
         user1.get().setBoardSet(user.getBoardSet());
         user1.get().setUsername(user.getUsername());
-        user1.get().setUserNotification(user.getUserNotification());
         user1.get().setCardNoti(user.getCardNoti());
         user1.get().setAvatarLink(user.getAvatarLink());
 
