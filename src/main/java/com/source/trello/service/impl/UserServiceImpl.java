@@ -72,5 +72,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllByCardSetContaining(card);
     }
 
+    @Override
+    public List<User> findAllByUsernameContainingAndBoardSetContaining(String name, Board board) {
+        return userRepository.findAllByUsernameContainingAndBoardSetContaining(name, board);
+    }
+
 
 }
