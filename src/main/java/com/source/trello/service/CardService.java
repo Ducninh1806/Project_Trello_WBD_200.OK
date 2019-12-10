@@ -1,6 +1,7 @@
 package com.source.trello.service;
 
 import com.source.trello.model.Card;
+import com.source.trello.model.Color;
 import com.source.trello.model.User;
 
 import java.util.List;
@@ -23,7 +24,10 @@ public interface CardService {
 
     List<Card> findAllByTitleContainingOrDescriptionContainingAndListSet_ListId(String title, String description, Long id);
 
-    List<Card> findAllByUserSetCardContaining(User user);
+    List<Card> findAllByUserSetCardContainingAndListSet_ListId(User user, Long id);
 
     List<Card> findAllByColorsContaining(String[] colors);
+
+    List<Card> findAllByColorSetContainsAndListSet_ListId(Color colors, Long id);
+
 }
