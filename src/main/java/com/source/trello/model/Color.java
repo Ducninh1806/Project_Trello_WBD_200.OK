@@ -15,8 +15,8 @@ public class Color {
     @ManyToMany(targetEntity = Card.class, fetch = FetchType.EAGER)
     @JoinTable(
             name = "color_card",
-            joinColumns = @JoinColumn(name = "card_id"),
-            inverseJoinColumns = @JoinColumn(name = "color_id"))
+            joinColumns = @JoinColumn(name = "color_id"),
+            inverseJoinColumns = @JoinColumn(name = "card_id"))
     Set<Card> cardColorSet;
 
     public Color() {

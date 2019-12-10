@@ -1,6 +1,7 @@
 package com.source.trello.service.impl;
 
 import com.source.trello.model.Card;
+import com.source.trello.model.Color;
 import com.source.trello.model.User;
 import com.source.trello.repository.CardRepository;
 import com.source.trello.service.CardService;
@@ -52,12 +53,19 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<Card> findAllByUserSetCardContaining(User user) {
-        return cardRepository.findAllByUserSetCardContaining(user);
+    public List<Card> findAllByUserSetCardContainingAndListSet_ListId(User user, Long id) {
+        return cardRepository.findAllByUserSetCardContainingAndListSet_ListId(user, id);
     }
 
     @Override
     public List<Card> findAllByColorsContaining(String[] colors) {
         return cardRepository.findAllByColors(colors);
     }
+
+    @Override
+    public List<Card> findAllByColorSetContainsAndListSet_ListId(Color colors, Long id) {
+        return cardRepository.findAllByColorSetContainsAndListSet_ListId(colors, id);
+    }
+
+
 }

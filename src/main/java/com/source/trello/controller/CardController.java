@@ -1,6 +1,7 @@
 package com.source.trello.controller;
 
 import com.source.trello.model.Card;
+import com.source.trello.model.Color;
 import com.source.trello.model.User;
 import com.source.trello.service.CardService;
 import com.source.trello.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -109,9 +111,9 @@ public class CardController {
     }
 
     //-------------------------------search card by users-------------------------------------------
-    @PostMapping("/user")
-    public ResponseEntity<List<Card>> findAllCardByUser(@RequestBody User user) {
-        List<Card> cardList = cardService.findAllByUserSetCardContaining(user);
+    @PostMapping("/user/{id}")
+    public ResponseEntity<List<Card>> findAllCardByUser(@RequestBody User user, @PathVariable Long id) {
+        List<Card> cardList = cardService.findAllByUserSetCardContainingAndListSet_ListId(user, id);
         return new ResponseEntity<>(cardList, HttpStatus.OK);
     }
 
@@ -120,6 +122,13 @@ public class CardController {
     public ResponseEntity<List<Card>> findAllCardByColor(@RequestBody String[] colors) {
         List<Card> cardList = cardService.findAllByColorsContaining(colors);
         return new ResponseEntity<>(cardList, HttpStatus.OK);
+    }
+
+    //--------------------------------search card by labels----------------------------------------
+    @PostMapping("/colors/{id}")
+    public ResponseEntity<List<Card>> findAllCardByLabel(@RequestBody Color colors, @PathVariable Long id){
+        List<Card> cards = cardService.findAllByColorSetContainsAndListSet_ListId(colors, id);
+        return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
 }
