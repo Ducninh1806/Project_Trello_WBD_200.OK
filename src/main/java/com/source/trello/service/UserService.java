@@ -31,4 +31,7 @@ public interface UserService {
 
     List<User> findAllByCardSetContaining(Card card);
 
+    List<User> findAllByUsernameContainingAndBoardSetContaining(String name, Board board);
+
+
 }

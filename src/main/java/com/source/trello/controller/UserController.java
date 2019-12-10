@@ -212,4 +212,15 @@ public class UserController {
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+    //--------------------find all user by name and boardSet------------------------
+    @GetMapping("/boardAndName/{id}")
+    public ResponseEntity<List<User>> findAllUserByNameAndBoard(@PathVariable Long id, @RequestParam String name) {
+        Optional<Board> board = boardService.findById(id);
+        List<User> users = userService.findAllByUsernameContainingAndBoardSetContaining(name, board.get());
+        if(users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 }

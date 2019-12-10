@@ -24,4 +24,6 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     List<User> findAllByUsernameContaining(String name);
 
     List<User> findAllByCardSetContaining(Card card);
+
+    List<User> findAllByUsernameContainingAndBoardSetContaining(String name, Board board);
 }
